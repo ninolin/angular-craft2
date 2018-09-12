@@ -1,6 +1,12 @@
-<button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()" label="Add"></button>
-
-<p-table [columns]="cols" [value]="accounts" selectionMode="single" [(selection)]="selectedCar" (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="15">
+<button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()" label="新增"></button>
+<div></div>
+<p-table [columns]="cols" [value]="accounts" selectionMode="single" [(selection)]="selectedCar" (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="10" #dt>
+  <ng-template pTemplate="caption">
+      <div style="text-align: right">        
+          <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+          <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+      </div>
+  </ng-template>
   <ng-template pTemplate="header" let-columns>
       <tr>
           <th *ngFor="let col of columns" [pSortableColumn]="col.field">
@@ -18,45 +24,37 @@
   </ng-template>    
 </p-table>
 
-<p-dialog header="Car Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="300">
+<p-dialog header="{{dialogTitle}}" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="300">
   <div class="ui-g ui-fluid" *ngIf="account">
       <div class="ui-g-12">
           <div class="ui-g-4">
-              <label for="vin">Vin</label>
+              <label for="vin">帳號</label>
           </div>
           <div class="ui-g-8">
-              <input pInputText id="vin" [(ngModel)]="account.vin" />
+              <input pInputText id="name" [(ngModel)]="account.name" />
           </div>
       </div>
       <div class="ui-g-12">
           <div class="ui-g-4">
-              <label for="year">Year</label>
+              <label for="year">餘額</label>
           </div>
           <div class="ui-g-8">
-              <input pInputText id="year" [(ngModel)]="account.year" />
+              <input pInputText id="amount" [(ngModel)]="account.amount" />
           </div>
       </div>
       <div class="ui-g-12">
           <div class="ui-g-4">
-              <label for="brand">Brand</label>
+              <label for="brand">單位</label>
           </div>
           <div class="ui-g-8">
-              <input pInputText id="brand" [(ngModel)]="account.brand" />
-          </div>
-      </div>
-      <div class="ui-g-12">
-          <div class="ui-g-4">
-              <label for="color">Color</label>
-          </div>
-          <div class="ui-g-8">
-              <input pInputText id="color" [(ngModel)]="account.color" />
+              <input pInputText id="uint" [(ngModel)]="account.uint" />
           </div>
       </div>
   </div>
   <p-footer>
       <div class="ui-dialog-buttonpane ui-helper-clearfix">
-          <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
-          <button type="button" pButton icon="fa fa-check" (click)="save()" label="Save"></button>
+          <button type="button" pButton icon="fa fa-close" (click)="delete()" label="{{dialogLButton}}"></button>
+          <button type="button" pButton icon="fa fa-check" (click)="save()" label="{{dialogRButton}}"></button>
       </div>
   </p-footer>
 </p-dialog>

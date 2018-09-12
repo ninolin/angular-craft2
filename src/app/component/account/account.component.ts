@@ -14,16 +14,18 @@ export class AccountComponent implements OnInit {
   newAccount: boolean;
   accounts: any[];
   cols: any[];
+  dialogTitle: string;
+  dialogRButton: string;
+  dialogLButton: string;
 
   constructor(private accountService: AccountService) { }
 
   ngOnInit() {
-    this.accountService.getAccount().then(accounts => {this.accounts = accounts; console.log(this.accounts);});
+    this.accountService.getAccount().then(accounts => this.accounts = accounts);
     this.cols = [
-        { field: 'vin', header: 'Vin' },
-        { field: 'year', header: 'Year' },
-        { field: 'brand', header: 'Brand' },
-        { field: 'color', header: 'Color' }
+        { field: 'name', header: '帳號' },
+        { field: 'amount', header: '餘額' },
+        { field: 'uint', header: '單位' }
     ];
   }
 
@@ -31,18 +33,30 @@ export class AccountComponent implements OnInit {
     this.newAccount = true;
     this.account = {};
     this.displayDialog = true;
+    this.dialogTitle = "新增帳號";
+    this.dialogRButton = "新增";
+    this.dialogLButton = "取消";
   }
 
   save() {
     let accounts = [...this.accounts];
-    if (this.newAccount)
-      accounts.push(this.account);
-    else
-      accounts[this.accounts.indexOf(this.selectedAccount)] = this.account;
-
-    this.accounts = accounts;
-    this.account = null;
-    this.displayDialog = false;
+    if (this.newAccount){
+      this.accountService.addAccount(this.account)
+        .then(v => {
+          accounts.push(this.account);
+          this.accounts = accounts;
+          this.account = null;
+          this.displayDialog = false;
+        });
+    } else {
+      this.accountService.updateAccount(this.account)
+        .then(v => {
+          accounts[this.accounts.indexOf(this.selectedAccount)] = this.account;
+          this.accounts = accounts;
+          this.account = null;
+          this.displayDialog = false;
+        });
+    }
   }
 
   delete() {
@@ -56,6 +70,9 @@ export class AccountComponent implements OnInit {
       this.newAccount = false;
       this.account = this.cloneCar(event.data);
       this.displayDialog = true;
+      this.dialogTitle = "修改帳號";
+      this.dialogRButton = "修改";
+      this.dialogLButton = "刪除";
   }
 
   cloneCar(c: any): any {
