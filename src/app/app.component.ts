@@ -11,7 +11,8 @@ export class AppComponent {
     { "id": 1, "name": "Dashboard" },
     { "id": 2, "name": "Account" },
     { "id": 3, "name": "Setting" },
-    { "id": 4, "name": "Crud" }
+    { "id": 4, "name": "Crud" },
+    { "id": 5, "name": "CompanyProfile"}
   ];
 
   constructor() { }

@@ -17,12 +17,14 @@ import { AppComponent } from './app.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { AccountComponent } from './component/account/account.component';
 import { AppRoutingModule } from './app-routing.module';
+import { CompanyprofileComponent } from './component/companyprofile/companyprofile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
-    AccountComponent
+    AccountComponent,
+    CompanyprofileComponent
   ],
   imports: [
     BrowserModule,
