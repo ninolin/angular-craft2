@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CompanyprofileComponent implements OnInit {
 
+  name: any;
+
   constructor() { }
 
   ngOnInit() {
